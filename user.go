@@ -5,7 +5,7 @@ import (
 )
 
 type User interface {
-	Id() string
+	IdForSession() string
 }
 
 type UserProvider interface {

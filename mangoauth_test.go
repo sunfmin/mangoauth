@@ -54,7 +54,7 @@ func (up *st) SaveTemporaryCredential(tc *goauth.TemporaryCredential) (err error
 	return
 }
 
-func (up *st) SaveTokenCredential(tc *goauth.TokenCredential) (err error) {
+func (up *st) SaveTokenCredential(env Env, tc *goauth.TokenCredential) (err error) {
 	storageImpl["Token:"+tc.UserId] = tc
 	storageImpl["User:"+tc.UserId] = &user{tc.UserId}
 	return

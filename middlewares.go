@@ -7,8 +7,8 @@ import (
 
 func MustLoggedIn(env Env, app App) (status Status, headers Headers, body Body) {
 	s := env.Session()
-	userId := s[sessionKey].(string)
-	if userId == "" {
+	userId, yes := s[sessionKey].(string)
+	if !yes || userId == "" {
 		return Redirect(301, uprovider.LoginURL(env))
 	}
 	u, err := userprovider.LoadUser(userId)
@@ -22,8 +22,8 @@ func MustLoggedIn(env Env, app App) (status Status, headers Headers, body Body) 
 
 func WithUserLoaded(env Env, app App) (status Status, headers Headers, body Body) {
 	s := env.Session()
-	userId := s[sessionKey].(string)
-	if userId != "" {
+	userId, yes := s[sessionKey].(string)
+	if yes && userId != "" {
 		u, err := userprovider.LoadUser(userId)
 		if err == nil && u != nil {
 			env[sessionKey] = u

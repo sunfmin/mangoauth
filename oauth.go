@@ -9,7 +9,7 @@ import (
 type OAuthCredentialStorage interface {
 	LoadTemporaryCredential(oauthToken string) (tc *goauth.TemporaryCredential, err error)
 	SaveTemporaryCredential(tc *goauth.TemporaryCredential) (err error)
-	SaveTokenCredential(tc *goauth.TokenCredential) (err error)
+	SaveTokenCredential(env Env, tc *goauth.TokenCredential) (err error)
 	UserByToken(env Env, tc *goauth.TokenCredential) (u User)
 	OAuthClient(env Env) (c *goauth.Client)
 }
@@ -82,11 +82,11 @@ func OAuthReady(env Env) (status Status, headers Headers, body Body) {
 		status = 404
 		return
 	}
-	storage.SaveTokenCredential(tc)
+	storage.SaveTokenCredential(env, tc)
 
 	u := storage.UserByToken(env, tc)
 	s := env.Session()
-	s[sessionKey] = u.Id()
+	s[sessionKey] = u.IdForSession()
 
 	return Redirect(301, uprovider.SuccessURL(env))
 }
