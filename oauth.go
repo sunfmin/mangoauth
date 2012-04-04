@@ -88,5 +88,5 @@ func OAuthReady(env Env) (status Status, headers Headers, body Body) {
 	s := env.Session()
 	s[sessionKey] = u.IdForSession()
 
-	return Redirect(301, uprovider.SuccessURL(env))
+	return Redirect(302, uprovider.SuccessURL(env))
 }

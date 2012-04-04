@@ -8,13 +8,16 @@ import (
 func MustLoggedIn(env Env, app App) (status Status, headers Headers, body Body) {
 	s := env.Session()
 	userId, yes := s[sessionKey].(string)
+	if uprovider == nil {
+		panic("please use mangoauth.SetupOAuth(...) to initialize mangoauth")
+	}
 	if !yes || userId == "" {
-		return Redirect(301, uprovider.LoginURL(env))
+		return Redirect(302, uprovider.LoginURL(env))
 	}
 	u, err := userprovider.LoadUser(userId)
 	if err != nil || u == nil {
 		log.Printf("mangoauth: can not load user %v", err)
-		return Redirect(301, uprovider.LoginURL(env))
+		return Redirect(302, uprovider.LoginURL(env))
 	}
 	env[sessionKey] = u
 	return app(env)

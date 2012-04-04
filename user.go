@@ -15,8 +15,7 @@ type UserProvider interface {
 var sessionKey string
 
 func Logout(env Env) (status Status, headers Headers, body Body) {
-
 	s := env.Session()
 	delete(s, sessionKey)
-	return Redirect(301, uprovider.SuccessURL(env))
+	return Redirect(302, uprovider.SuccessURL(env))
 }
