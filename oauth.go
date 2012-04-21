@@ -1,8 +1,8 @@
 package mangoauth
 
 import (
+	. "github.com/paulbellamy/mango"
 	"github.com/sunfmin/goauth"
-	. "github.com/sunfmin/mango"
 	"log"
 )
 

@@ -3,9 +3,9 @@ package mangoauth
 import (
 	"encoding/json"
 	"fmt"
+	. "github.com/paulbellamy/mango"
 	"github.com/sunfmin/goauth"
 	"github.com/sunfmin/integrationtest"
-	. "github.com/sunfmin/mango"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -19,7 +19,7 @@ type user struct {
 	id string
 }
 
-func (u *user) Id() string {
+func (u *user) IdForSession() string {
 	return u.id
 }
 
